@@ -1,3 +1,4 @@
+/** Use readline to create a new "interface" with which to interact with the user */
 var rl, readline = require('readline');
 
 var get_interface = function(stdin, stdout) {
@@ -5,9 +6,13 @@ var get_interface = function(stdin, stdout) {
   else stdin.resume(); // interface exists
   return rl;
 }
-
+/**
+ * Checks response from user
+ * @param {string} message- Message pulled from confirm file
+ * @param {string} callback - Handles the response from the user
+ * 
+ */
 var confirm = exports.confirm = function(message, callback) {
-
   var question = {
     'reply': {
       type: 'confirm',
@@ -15,7 +20,6 @@ var confirm = exports.confirm = function(message, callback) {
       default: 'yes'
     }
   }
-
   get(question, function(err, answer) {
     if (err) return callback(err);
     callback(null, answer.reply === true || answer.reply == 'yes');
@@ -23,6 +27,12 @@ var confirm = exports.confirm = function(message, callback) {
 
 };
 
+/**
+ * Represents a book.
+ * @constructor
+ * @param {string} options - 
+ * @param {string} callback -
+ */
 var get = exports.get = function(options, callback) {
 
   if (!callback) return; // no point in continuing
