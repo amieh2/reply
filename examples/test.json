@@ -1,0 +1,13 @@
+{
+  "name": {
+  	"message": "Please type in your name."
+  },
+  "color": {
+    "message": "Whats your favorite color?",
+  },
+  "programming": {
+    "type": "confirm",
+    "message": "Do you like programming?",
+    "default": "yes"
+  }
+}

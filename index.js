@@ -7,8 +7,8 @@ var get_interface = function(stdin, stdout) {
   return rl;
 }
 /**
- * Checks response from user
- * @param {string} message- Message pulled from confirm file
+ * Checks response from user, yes or no
+ * @param {string} message- Message pulled from file
  * @param {string} callback - Handles the response from the user
  * 
  */
@@ -28,10 +28,10 @@ var confirm = exports.confirm = function(message, callback) {
 };
 
 /**
- * Represents a book.
- * @constructor
- * @param {string} options - 
- * @param {string} callback -
+ * Represents multiple responses from the user
+ * @param {string} options - Reads from the options json file
+ * @param {number} callback - Handles the response from the user
+ * 
  */
 var get = exports.get = function(options, callback) {
 
@@ -56,14 +56,21 @@ var get = exports.get = function(options, callback) {
     rl.close();
     rl = null;
   }
-
+  
   var get_default = function(key, partial_answers) {
     if (typeof options[key] == 'object')
       return typeof options[key].default == 'function' ? options[key].default(partial_answers) : options[key].default;
     else
       return options[key];
   }
+  
 
+/**
+ * Matches user's reply to value based on contents of the string
+ * @param {string} reply - user's input 
+ * @return - returns the user's reply
+ * 
+ */
   var guess_type = function(reply) {
 
     if (reply.trim() == '')
@@ -77,7 +84,14 @@ var get = exports.get = function(options, callback) {
 
     return reply;
   }
-
+  
+/**
+ * Checks if user's response is valid
+ * @param {string} key - values from file 
+ * @param {string} answer - user's input
+ * @return {boolean}- returns true or false
+ * 
+ */
   var validate = function(key, answer) {
 
     if (typeof answer == 'undefined')
@@ -95,6 +109,11 @@ var get = exports.get = function(options, callback) {
 
   }
 
+/**
+ * Prints error if user's input is invalid
+ * @param {string} key - values from file 
+ * 
+ */
   var show_error = function(key) {
     var str = options[key].error ? options[key].error : 'Invalid value.';
 
@@ -104,6 +123,7 @@ var get = exports.get = function(options, callback) {
     stdout.write("\033[31m" + str + "\033[0m" + "\n");
   }
 
+ 
   var show_message = function(key) {
     var msg = '';
 
@@ -115,7 +135,11 @@ var get = exports.get = function(options, callback) {
 
     if (msg != '') stdout.write("\033[1m" + msg + "\033[0m\n");
   }
-
+ /**
+ *Takes user input for password and masks it with an astrick 
+ * @param {string} propmt 
+ * @param{string} callback
+ */
   // taken from commander lib
   var wait_for_password = function(prompt, callback) {
 
@@ -149,6 +173,7 @@ var get = exports.get = function(options, callback) {
     stdin.on('keypress', keypress_callback);
   }
 
+/** Checks guess type and validtate user's reply */
   var check_reply = function(index, curr_key, fallback, reply) {
     var answer = guess_type(reply);
     var return_answer = (typeof answer != 'undefined') ? answer : fallback;
@@ -158,7 +183,13 @@ var get = exports.get = function(options, callback) {
     else
       show_error(curr_key) || next_question(index); // repeats current
   }
-
+  
+  
+ /**
+ *Returns false if condition is not found in user's answer, otherwise true 
+ * @param {string} conds - condition for the answer
+ * @return{boolean} - returns true or false
+ */
   var dependencies_met = function(conds) {
     for (var key in conds) {
       var cond = conds[key];
@@ -177,6 +208,14 @@ var get = exports.get = function(options, callback) {
     return true;
   }
 
+/**
+ *Gets the next question in the array
+ * @param {number} index - position of question in the array
+ * @param {string} prev_key - checks the previous question
+ * @param {string} answer - user's answer
+ * @return
+ * 
+ */
   var next_question = function(index, prev_key, answer) {
     if (prev_key) answers[prev_key] = answer;
 
@@ -223,6 +262,7 @@ var get = exports.get = function(options, callback) {
   rl = get_interface(stdin, stdout);
   next_question(0);
 
+/** Throws error if given answer doesnt match or if user quits*/
   rl.on('close', function() {
     close_prompt(); // just in case
 
