@@ -11,7 +11,7 @@ The below questions should be answered (in detail!) regarding your submission.
 > When writing comments that raise the level of abstraction that means to write a comment at a higher level than the code. This means not explaining every detail that is happening step by step in the code but just a general summary of what the function is doing. If I had to explaing to a new CSE 142 student how to write an effective comment I would first tell them to write in a single sentence what their method is doing. Then add a sentence about parameters or return values. I would tell them not to write anything specific happening in their code and not to specify what kind of loops they are using because its not needed in the comment. 
 
 ##### 3. Approximately how many hours did it take you to complete this assignment? #####
-> It took me approximately around 12 hours to complete this assignmnet.
+> It took me approximately around 12 hours to complete this assignmnet. I spend most of my time tyring to understand the code. I went function by function testing the code and reading it. Then spent time on commenting the code. 
 
 
 ##### 4. Did you receive help from any other sources (classmates, etc)? If so, please list who (be specific!). #####
@@ -19,4 +19,4 @@ The below questions should be answered (in detail!) regarding your submission.
 
 
 ##### 5. Did you encounter any problems in this assignment we should warn students about in the future? How can we make the assignment better? #####
-> I didnt encounter any problems in this assinnment. 
+> I didnt encounter any problems in this assinnment, it just took me a while to understand the module. 
